@@ -11,10 +11,13 @@ int enablerPin  = 10 ;
 int relay_pin =7;
 char in;
    void setup() {
-    
+    pinMode(relay_pin, OUTPUT);
+        myservo.attach(9);
+        myservo.write(80);              // tell servo to go to position in variable 'pos'
+  
         BTSerial.begin(9600);//블루투스 통신
         Serial.begin(9600);//시리얼통신
-     pinMode(relay_pin, OUTPUT);
+    
         pinMode(motor1PinA, OUTPUT);
         pinMode(motor1PinB, OUTPUT);
         pinMode(motor2PinA, OUTPUT);
@@ -23,8 +26,8 @@ char in;
         pinMode(enablelPin, OUTPUT);
 
         // set enablePin high so that motor can turn on:
-       analogWrite(enablerPin, 250);
-       analogWrite(enablelPin, 250);
+       analogWrite(enablerPin, 100);
+       analogWrite(enablelPin, 100);
        }
    void loop() {
        if (BTSerial.available())
@@ -43,51 +46,72 @@ char in;
                case 'S': Stop(); break;
                case 'L': Left(); break;
                case 'B': Back(); break;
-               case 'G': Back(); break;
-              case 'W': FrontLightOn(); break;
+               case 'W': FrontLightOn(); break;
                case 'w': FrontLightOff(); break;
+               case 'V': HornOn(); break;
+               case 'v': HornOff(); break;
              } 
-      }
-      void Forward()
-     {
-       digitalWrite(motor1PinA, LOW);
-       digitalWrite(motor1PinB,HIGH);
-       digitalWrite(motor2PinA,HIGH);
-       digitalWrite(motor2PinB,LOW);
-     }  
+      }  
+void Forward(){  
+    //  앞
  
-void Back(){
-       digitalWrite(motor1PinA, HIGH);
+    digitalWrite(motor1PinA, LOW);
+    digitalWrite(motor1PinB,HIGH);
+    digitalWrite(motor2PinA,HIGH);
+    digitalWrite(motor2PinB,LOW);
+    
+}
+void Back()
+     {
+      digitalWrite(motor1PinA, HIGH);
       digitalWrite(motor1PinB, LOW);
       digitalWrite(motor2PinA,LOW);
       digitalWrite(motor2PinB,HIGH);
-   
-}
-void Right()// 우회전
+     }
+void Left()// 좌회전
      {
-      digitalWrite(motor1PinA,LOW);
-      digitalWrite(motor1PinB,LOW);
-      digitalWrite(motor2PinA,HIGH);
+     digitalWrite(motor1PinA,LOW);
+      digitalWrite(motor1PinB,HIGH);
+      digitalWrite(motor2PinA, LOW);
       digitalWrite(motor2PinB,LOW);
         }
-void Left()
-  { //좌회전
-      digitalWrite(motor1PinA, LOW);
+void Right()
+  { //우회전
+     digitalWrite(motor1PinA, LOW);
+      digitalWrite(motor1PinB, LOW);
+      digitalWrite(motor2PinA, HIGH);
+      digitalWrite(motor2PinB, LOW);
+  }
+void ForwardLeft() 
+  { 
+    analogWrite(enablerPin, 100);
+       analogWrite(enablelPin, 150);
+     digitalWrite(motor1PinA, LOW);
       digitalWrite(motor1PinB, HIGH);
       digitalWrite(motor2PinA, LOW);
       digitalWrite(motor2PinB, LOW);
+  
   }
-
-
-     void FrontLightOn()
+  void HornOn()
+  {     myservo.write(80);              // tell servo to go to position in variable 'pos'
+         delay(150);
+         
+  }
+void HornOff()
+  { 
+    myservo.write(30);              // tell servo to go to position in variable 'pos'
+         delay(150);
+         
+  }
+     
+void FrontLightOn()
   { 
      digitalWrite(9, LOW);
-   digitalWrite(relay_pin,HIGH);
+   digitalWrite(relay_pin, HIGH);
     delay(3000);   
   }
-  
   void FrontLightOff()
-  {
+  { 
    digitalWrite(relay_pin, LOW);     
   }
 void Stop(){
@@ -95,4 +119,6 @@ void Stop(){
          digitalWrite(motor1PinB, LOW);
          digitalWrite(motor2PinA, LOW);
          digitalWrite(motor2PinB, LOW);
+         digitalWrite(relay_pin, LOW);
+         digitalWrite(9, LOW);
         }
