@@ -50,7 +50,7 @@ char in;
       }
       void Forward()
      {
-      digitalWrite(motor1PinA, LOW);
+       digitalWrite(motor1PinA, LOW);
        digitalWrite(motor1PinB,HIGH);
        digitalWrite(motor2PinA,HIGH);
        digitalWrite(motor2PinB,LOW);
@@ -65,14 +65,14 @@ void Back(){
 }
 void Right()// 우회전
      {
-     digitalWrite(motor1PinA,LOW);
+      digitalWrite(motor1PinA,LOW);
       digitalWrite(motor1PinB,LOW);
       digitalWrite(motor2PinA,HIGH);
       digitalWrite(motor2PinB,LOW);
         }
 void Left()
   { //좌회전
-     digitalWrite(motor1PinA, LOW);
+      digitalWrite(motor1PinA, LOW);
       digitalWrite(motor1PinB, HIGH);
       digitalWrite(motor2PinA, LOW);
       digitalWrite(motor2PinB, LOW);
@@ -87,7 +87,7 @@ void Left()
   }
   
   void FrontLightOff()
-  { //10시30분
+  {
    digitalWrite(relay_pin, LOW);     
   }
 void Stop(){
